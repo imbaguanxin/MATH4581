@@ -1,0 +1,253 @@
+ \documentclass[10pt]{article}  
+\usepackage{graphicx}
+\usepackage{geometry}   %设置页边距的宏包
+
+\usepackage{algpseudocode}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{multicol}
+\usepackage{amsfonts}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\Ib}{\mathbf{I}}
+\newcommand{\Pb}{\mathbf{P}}
+\newcommand{\Qb}{\mathbf{Q}}
+\newcommand{\Rb}{\mathbf{R}}
+\newcommand{\Nb}{\mathbf{N}}
+\geometry{left=1cm,right=1cm,top=1cm,bottom=1.5cm}  %设置 上、左、下、右 页边距
+
+\begin{document}  
+\begin{multicols}{2}
+\begin{enumerate}
+\item Moment Generating Function\\
+$M_X(t) = E(e^{tx})$\\
+continuous: $M_X(t) = \int_{-\infty}^{\infty}e^{tx}f_x(x)dx$\\
+discrete: $M_X(t) = \sum e^{tx}P(x)$\\
+$e^{tx}$ expansion: $\sum_{n = 0}^{\infty} \frac{(tx)^n}{n!}$\\
+property:\\
+$M_X^{(n)}(0) = E(X^n)\\
+VAR[X] = E[X^2] - E^2[X] = M_x''(0) - [M_x'(0)]^2$\\
+$M_x(t) = M_y(t) \rightarrow X Y$ has same distribution\\ 
+$M_{a + bX}(t) = e^{at}M_X(bt)$\\
+$M_{X+Y}(bt) = M_X(t)M_Y(t)$ ($X,Y$ independent)
+
+\item Chi-Square
+\begin{enumerate}
+\item Goodness of fit test problem: Outcome vs Expected\\
+df = t-1. If expected is not clear, use maximum likelihood to maximize and df = Unknown - 1
+
+\item Two way chi square test:(2 r.v indep. ?)\\
+	calculate the probability from raw data\\
+	assume two r.v. are independent, get the expected number to fill out the expected table\\
+	$D = \sum \frac{(x_i - np_i)^2}{np_i}$, df = (row-1)(col-1)\\
+	Compare with $\chi^2_{df,\alpha}$ or Use $P-value$\\
+	Calculator: $\chi^2-$test, input 2 matrices
+\end{enumerate}
+
+\item ANOVA: test whether means are the same\\
+When ANOVA fails:
+\begin{enumerate}
+\item Contrast - split to two groups:\\
+	$c = a_1u_1 + a_2u_2 + \dots (\sum a_i = 0)$ \\
+	$H_0: c = 0$, $\hat{c} = a_1\overbar{x_1}+a_2\overbar{x_2}+\dots$\\
+	MSE = ANOVA Error $\rightarrow$ MS\\
+	$$t = \frac{\hat{c}}{Sxp \sqrt{\sum \frac {a_i^2}{n_i}}} \ or \  \frac{\hat{c}}{\sqrt{MSE \sum \frac {a_i^2}{n_i}}} \ \ df = n-k$$
+	n: $\mathbf{total}$ $\#$ of data, k: total $\#$ of groups\\
+	compare with $t_{\frac{\alpha}{2},df}$
+\item Bonferroni method\\
+	comparing two group:
+	$\alpha ' = \frac{2\alpha}{k(k-1)}, \ df = n-k$\\
+	$$t_{a,b} = \frac{\overbar{x_a}- \overbar{x_b}}{Sxp \sqrt{\frac{1}{n_a}+\frac{1}{n_b}}} \ \ \ \  t_{\frac{\alpha'}{2},df}$$
+\end{enumerate}
+
+\item Find Regression Curve for Y on X\\
+known: $f_{x,y}(x,y)$\\
+$f_x(x) = \int f_{x,y}(x,y)dy$\\
+$f_Y(y|x) = \frac{f_{x,y}(x,y)}{f_x(x)}$\\
+Regression Equation = $E(Y|X = x) = \int y  f(y|x)dy$
+
+\item Linear Regression
+\begin{enumerate}
+\item LinRegTTest: $y = \hat{\beta_0} + \hat{\beta_1}x$\\
+	$\rightarrow r^2$ bigger is better fitting linear model
+
+\item slope confidence Interval:\\
+	$$\hat{\beta_0} \pm t_{n-2, \frac{\alpha}{2}}\frac{S}{\sqrt{\sum{(x_i-\overbar{x})^2}}}\ \ or\ \ LinRegTInt $$
+	
+\item Test at the $\alpha$\% to see slope is $t_0$(usually 0)\\
+$$ t = \frac{\hat{\beta_1}-t_0}{\frac{S}{\sqrt{\sum{(x_i-\overbar{x})^2}}}} \ \ \ \  t_{n-2, \frac{\alpha}{2}} \ \ or \ \ LinRegTTest$$
+
+\item Forecasting, Find $\alpha$\% confidence Interval:\\
+	Estimated mean:
+	$$\overbar{y} = \hat{y}(x = k)\pm S t_{n-2,\frac{\alpha}{2}}  \sqrt{\frac{1}{n} + \frac{(x-\overbar{x})^2}{\sum(x_i-\overbar{x})^2}}$$
+	Expected Value:
+	$$\hat{y} = \hat{y}(x = k)\pm S t_{n-2,\frac{\alpha}{2}} \sqrt{1 + \frac{1}{n} + \frac{(x-\overbar{x})^2}{\sum(x_i-\overbar{x})^2}}$$
+\item exponential model:\\
+	$y = ab^x \ \rightarrow \ lny = lna + xlnb, \ \hat{\beta_0}\rightarrow lna \ \hat{\beta_1}\rightarrow lnb$
+
+\item $\sum(x_i-\overbar{x})^2 = (n-1)VAR_x^2$\\
+Use LIST$\rightarrow$variance or STAT$\rightarrow$Test$\rightarrow$T-test
+
+\item r estimates correlation coefficient of (x,y)\\
+	$\rho = \frac{COV[X,Y]}{STD[X]STD[Y]}$\\
+	$STD[X] = \sqrt{E(X^2) - E^2(X)}\\E(X) = \int xf_x(x)dx, \ f_x(x) = \int f_{X,Y}dy$\\
+	$COV[X,Y] = E[XY] - E[X]E[Y]$\\
+	$E(XY) = \int \int xyf_{x,y}dxdy$
+\end{enumerate}
+
+\item Markov chains
+	\begin{enumerate}
+%
+	\item Properties of Transition Matrix $\Pb$\\
+		Sum of Rows are 1, all terms$\in [0,1]$\\
+		$\Pb^n\rightarrow$ go through $n$ transitions\\
+		$\Pb^n \vec v\rightarrow$ the probability of getting each state given starting vector $\vec v$ after $n$ transitions
+%
+	\item Absorbing Markov Chains
+	rewrite the Transition Matrix P to:
+	$$\tilde{\Pb} = \left(
+	\begin{array}{cc}
+	\Qb & \Rb  \\
+	0 & \Ib  \\
+	\end{array} \right)$$
+	Fundamental Matrix $\Nb= (\Ib - \Qb)^{-1},(\Nb > 0)$\\
+	Time to absorption: \\
+	add up the corresponding row in $\Nb$\\
+	Absorption Probabilities: $\mathbf{B} = \Nb \Rb$, find $P_{ij} = \mathbf{B}_{ij}$
+%
+	\item Ergodic and Regular Markov Chains
+	\begin{enumerate}
+		\item Ergodic:\\
+		It is possible to go from every state to every state (not necessarily in one move)
+		\item Regular:\\
+	It is possible to go to every state to every state after n transitions.$\rightarrow \exists k, s.t. \forall$ terms in $\Pb^k$ are non-zero
+		\end{enumerate}
+%Regular is a stronger than Ergodic.
+	\item Stationary / Equilibrium vector\\
+	For Regular Markov Cains, exsists $$\mathbf{w}\Pb = \mathbf{w}, \ \ \ \  \lim_{n\rightarrow \infty} \Pb^n = \mathbf{W}$$ where $\mathbf{W}$'s rows are all equal to $\mathbf{w}$\\
+	Calculate $\mathbf{w}$:
+%was \begin{enumerate}
+%\item 
+	simply calculate wP = w, $\sum w_i = 1\rightarrow n+1$ equations for $n$ unknowns.
+%\item $\mathbf{w}\Pb = \Pb^T \mathbf{w} \rightarrow (\Pb^T - \Ib) \mathbf{w} = 0$\\
+%calculate $rref(\Pb^T - \Ib)$ to find the null space and use $\sum w_i = 1$ to get the answer.
+%\end{enumerate}
+	\item Meaning of $\mathbf{w}_j$
+	\begin{enumerate}
+		\item $\mathbf{w}_j$: Probability/fraction of time spent  in $j$
+		\item $\frac{1}{\mathbf{w}_j}$: first return time/revisit steps  to state $j$
+	\end{enumerate}
+	\item Tricks:
+	\begin{enumerate}
+		\item mean time of state $i\rightarrow$ state $j$:\\
+		set state $j$ to absorbing state, calculate $\Nb$ and find the time to get absorbed
+		\item probability move from $i$ to $j$ in $k$ steps: $\Pb^{k}_{ij}$
+		%\item Gambler's problem:\\
+		%The equation that all $P_k$ or $E_k$ fits $\rightarrow$ differential EQ (relation of steps around k), and compute the final EQ with $P_0$ and $P_N$
+	\end{enumerate}
+	\item Reversible Markov Chain: $\Leftrightarrow \mathbf{w}_i \mathbf{P}_{ij} = \mathbf{w}_j \mathbf{P}_{ji}$
+\end{enumerate}
+
+\item Poisson Process: simple Poisson$\rightarrow$ possionpdf
+\begin{enumerate}
+	\item Basic Properties: $\lambda$ = Rate of Arrivals\\
+	$N(t)$ = numbers of arrivals up to time t\\
+	$P(N(t) = k) = \frac{(\lambda t)^k}{k!}e^{-\lambda t}$\\
+	$E(N(t)) = \lambda t$\\
+	$P(N(s)-N(e) = k) = P(N(s-t) = k)$\\
+	$E(N(s)-N(e)) = E(N(s-e)) = \lambda(s-e)$
+	\item First arrival time(equal to next arrival time) $T_1$ is an Exponential Distribution\\
+	$f_{T_1}(t) = \lambda e^{-\lambda t} (t \ge 0)$\\
+	$F_{T_1}(t) = 1-e^{-\lambda t} (t \ge 0)$\\
+	$\Leftrightarrow P(T_1 < t) = 1-e^{-\lambda t}\Leftrightarrow P(T_1>t) = e^{-\lambda t}$\\
+	$E(T_n) = nE(T_1)$
+	\item Prob. that more than n arrivals comes in T time:\\
+	$\rightarrow$ $n^{th}$ arrival is less than T time:\\
+	$P(T_n < T) \rightarrow$CLT: $P(Z_n < \frac{T - \mu n}{\sigma \sqrt n})$\\
+	Since $T_n$ is Exponential Distribution, $\mu = \sigma = \frac{1}{\lambda}$
+	\item Merging of Possion\\
+	If $N_1(t)\sim P.P$ rate = $\lambda_1$, $N_2(t)\sim P.P$ rate = $\lambda_2$\\
+	then $N(t) \sim P.P rate = \lambda_1 + \lambda_2$\\
+	$P$(first/next arrival is type 1)\\
+	 =$P(N_1(t) = 1, N_2(t) = 0 | N(t) = 1)
+	 =\frac{\lambda_1}{\lambda_1+\lambda_2}$\\
+	 $P$(first/next arrival is type 2)\\
+	 = $P(N_2(t) = 1, N_1(t) = 0 | N(t) = 1)
+	 = \frac{\lambda_2}{\lambda_1+\lambda_2}$\\
+	 Prob. that k of n arrivals are of type 1: \\Binomial Distribution.\\
+	 P(type 1) = $\frac{\lambda_1}{\lambda_1+\lambda_2}$
+	\end{enumerate}
+	\item Discrete Finite Queues\\
+	Draw the chain; 
+	steady state prob.: each pair of arrows carry the same - $w_i\lambda = w_{i+1}\mu$\\
+	Little's Law:\\
+	$\lambda T = N\Rightarrow$(Arrival Rate)$E(T) = E(N)$\\
+	$E(T)\rightarrow$mean time; $E(N)\rightarrow$mean number\\
+	In discrete, arrival rate: $\sum_{i = 0}^{i = n - 1} \lambda W_i$
+	%
+	\item M/M/1\\
+	$\lambda$ = arrival rate of customer\\
+	$\mu$ = service rate per customer\\
+	$\rho = \frac{\lambda}{\mu}$, $\lambda P_k = \mu P_{k+1}\rightarrow P_{k+1} = \rho P_k$\\
+	$P_k = \rho^k(1-\rho)$\\
+	number in system:$E(N) = \frac{\rho}{1-\rho} = \frac{\lambda}{\mu - \lambda}$\\
+	number in queue:$E(N_q) = \frac{\rho^2}{1-\rho} = \frac{\lambda^2}{\mu(\mu-\lambda)}$\\
+	Mean time in system:$E(T) = \frac{E(N)}{\lambda} = \frac{1}{\mu-\lambda}= \frac{1}{\mu} + E(T_q)$\\
+	Mean time in queue:$E(T_q) = \frac{E(T_q)}{\lambda} = \frac{\lambda}{\mu(\mu-\lambda)}$\\
+	Mean service time:$E(T) - E(T_q) = \frac{1}{\mu}$\\
+	Distribution of Time in System is equivalent to an Exponential Distribution where mean:$\frac{1}{\lambda^*} = \frac{1}{\mu - \lambda}$\\
+	T: time in system\\
+	PDF: $P(T<t) = F(X = x) = 1-e^{-\lambda^* x}, (x > 0)$
+	
+	\item M/M/C single queue, C servers\\
+	$\lambda$ = arrival rate of customer\\
+	$\mu$ = single server's service rate per customer\\
+	$\rho = \frac{\lambda}{\mu}$\\
+	$$P_0 = (1+\rho+\frac{\rho^2}{2}+\frac{\rho^3}{3!}+\dots+\frac{\rho^{c-1}}{(c-1)!}+\frac{\rho^c}{c!(1-\frac{\rho}{c})})^{-1}$$
+	$P_1 = \rho P_0, \ P_2 = \frac{\rho^2}{2}P_0, \ P_3 = \frac{\rho^3}{3!}P_0 \ \dots \\ P_c = \frac{\rho^c}{c!}P_0, \ P_{c+k} = (\frac{\rho}{c})^k P_c$\\
+	Traffic density: $\frac{\rho}{c} = \frac{\lambda}{c\mu}$, stable if $\frac{\rho}{c} < 1$\\
+	number in system:$E(N) = \rho + P_c\frac{\frac{\rho}{c}}{(1-\frac{\rho}{c})^2} = \rho + E(N_q)$\\
+	number in queue:$E(N_q) = P_c\frac{\frac{\rho}{c}}{(1-\frac{\rho}{c})^2} =$\\
+	Mean time in system:$E(T) =\frac{1}{\lambda}E(N)$\\
+	Mean time in queue:$E(T_q) = \frac{1}{\lambda}E(N_q)$\\
+	Mean service time:$E(T) - E(T_q) = \frac{1}{\mu}$
+	
+	\item M/M/C/k C servers, max customer in system k\\
+	$\lambda$ = arrival rate of customer\\
+	$\mu$ = single server's service rate per customer\\
+	$P_i = \frac{\rho^i}{i!}P_0, i = 0,1,\dots,c$\\
+	$P_{c+p} = \frac{\rho^p}{c^p}P_c, p = 0,1,\dots,k - c$\\
+	$\sum P_i = 1, \ E(N) = \sum iP_i, \ E(N_q) = \sum (i-c)P_i (i>c)$\\
+	Effective arrive rate $\lambda_a = \lambda(1-P_k)$\\
+	$E(T) = \frac{E(N)}{\lambda_a}, E(T_q) = \frac{E(N_q)}{\lambda_a}$
+	
+	\item Stochastic Process\\
+	mean: $m(t) = E[X(t)]$, autocorrelation: $R(t,s) = E[X(t)X(s)]$, autocovariance: $C(t,s) = R(t,s) - m(t)m(s)$\\
+	Stock and Option problem:(I outcomes, J wagers):\\
+	list outcome, cost, future value, return for each wager. \\$E(R_j) = \sum_{i = 1}^{I} r_{ji}p_i$, $R_i = \sum_{j = 1}^{J} x_ir_{ji} $\\
+	No arbi. price: $E(R_i) = 0, \sum p_i = 1\rightarrow c$(option price)\\
+	Find arbi. return: $\forall R_i > 0$(usually sell stock buy option) 
+
+	\item Brownian Motion\\
+	B(t) $\Leftrightarrow$ normal dist. with $\mu = 0, $VAR = t; (B(t) = $\sqrt{t}\mathbf{Z}$\\
+	Process start over at every time: $B(t_2) - B(t_1) = B(t_2 - t_1)$\\
+	$B(t_2) - B(t_1), B(t_3) - B(t_2)$ are independent if no overlap.\\
+	BM with drift:\\
+	$X(t) = x_0 + \mu t + \sigma B(t)$, $x_0$: starting value, $\mu t$: drift term.
+	
+	\item Geometric Brownian Motion\\
+	$X(t) = x_0e^{\mu t + \sigma B(t)}\rightarrow$ convert to normal. $E(e^{a\mathbf{Z}}) = e^{\frac{a^2}{2}}$\\
+	Black-Scholes Formula:\\
+	$\alpha=$ interest rate (risk-free interest), $x(0)=$ current price (start price), $K=$ Threshold of option (strike price), $T=$ time to experience option (maturity), $\sigma=$ (annualized) volatility, $\sigma^2=$ variance para. $c=$ cost of option.\\
+	No arbitrage option: $\alpha = \mu + \frac{\sigma^2}{2}$, F: std. normal cdf\\
+	$C = X(0)F(b+\sigma \sqrt{T}) - Ke^{-\alpha T}F(b), \ b = \frac{(\alpha - \frac{\sigma^2}{2})T + ln(\frac{x(0)}{k})}{\sigma \sqrt{T}}$
+\end{enumerate}
+
+\newpage
+
+\end{multicols}      
+\end{document}
