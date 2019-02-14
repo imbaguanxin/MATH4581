@@ -2,7 +2,7 @@
 
 - ***Course Name***: Statistics and Stochastic Processes
 - ***Course Number***: MATH 4581
-- ***Institution***: Northeastern University COS
+- ***Institution***: Northeastern University College of Science
 - ***Instructor***: Christopher King (c.king@northeastern.edu)
 - ***Time***: 2018 Fall Semester
 ## ***Text Book***: 
